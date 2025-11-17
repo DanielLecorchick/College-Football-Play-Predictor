@@ -69,18 +69,17 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # === 6. Scale features ===
-# KNN is distance-based and requires feature scaling
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
 # === 7. Train K-Nearest Neighbors ===
 knn_model = KNeighborsClassifier(
-    n_neighbors=249,
-    weights='distance',  # Weight by inverse distance
+    n_neighbors=249, # sqrt(sample size) = sqrt(62219)
+    weights='distance',
     algorithm='auto',
     metric='minkowski',
-    p=2  # Euclidean distance
+    p=2
 )
 knn_model.fit(X_train, y_train)
 
