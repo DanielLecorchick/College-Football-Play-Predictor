@@ -1,0 +1,166 @@
+Gradient Boosting Results
+Accuracy: 0.636
+
+Confusion Matrix:
+ [[3727 2510]
+ [2026 4199]]
+
+Classification Report:
+               precision    recall  f1-score   support
+
+        Pass       0.65      0.60      0.62      6237
+         Run       0.63      0.67      0.65      6225
+
+    accuracy                           0.64     12462
+   macro avg       0.64      0.64      0.64     12462
+weighted avg       0.64      0.64      0.64     12462
+
+
+Feature Importances:
+             Feature  Importance
+0              down    0.322679
+1          distance    0.282982
+4        score_diff    0.117105
+3            period    0.082150
+2         yard_line    0.063004
+6   prev2_play_type    0.026265
+8       prev1_yards    0.023531
+7   prev3_play_type    0.022248
+11   prev1_distance    0.018190
+5   prev1_play_type    0.016691
+10      prev3_yards    0.012907
+9       prev2_yards    0.012248
+
+K-Nearest Neighbors Results
+Accuracy: 0.628
+
+Confusion Matrix:
+ [[3815 2422]
+ [2215 4010]]
+
+Classification Report:
+               precision    recall  f1-score   support
+
+        Pass       0.63      0.61      0.62      6237
+         Run       0.62      0.64      0.63      6225
+
+    accuracy                           0.63     12462
+   macro avg       0.63      0.63      0.63     12462
+weighted avg       0.63      0.63      0.63     12462
+
+Conditional Inference Forest Results
+Accuracy: 0.637
+
+Confusion Matrix:
+ [[3729 2508]
+ [2013 4212]]
+
+Classification Report:
+               precision    recall  f1-score   support
+
+        Pass       0.65      0.60      0.62      6237
+         Run       0.63      0.68      0.65      6225
+
+    accuracy                           0.64     12462
+   macro avg       0.64      0.64      0.64     12462
+weighted avg       0.64      0.64      0.64     12462
+
+
+Feature Importances:
+             Feature  Importance
+0              down    0.041862
+1          distance    0.036855
+3            period    0.015734
+4        score_diff    0.015697
+8       prev1_yards    0.007687
+5   prev1_play_type    0.005725S
+11   prev1_distance    0.004273S
+2         yard_line    0.004095
+6   prev2_play_type    0.004036
+7   prev3_play_type    0.003043
+9       prev2_yards    0.001633
+10      prev3_yards    0.000573
+
+Logistic Regression Results
+Accuracy: 0.599
+
+Confusion Matrix:
+ [[3169 3068]
+ [1924 4301]]
+
+Classification Report:
+               precision    recall  f1-score   support
+
+        Pass       0.62      0.51      0.56      6237
+         Run       0.58      0.69      0.63      6225
+
+    accuracy                           0.60     12462
+   macro avg       0.60      0.60      0.60     12462
+weighted avg       0.60      0.60      0.60     12462
+
+
+Feature Coefficients:
+             Feature  Coefficient
+4        score_diff     0.137130
+6   prev2_play_type     0.094381
+7   prev3_play_type     0.080798
+3            period     0.038548
+11   prev1_distance     0.034791
+9       prev2_yards     0.022001
+5   prev1_play_type     0.019384
+2         yard_line     0.006292
+8       prev1_yards     0.004475
+10      prev3_yards    -0.024631
+0              down    -0.446462
+1          distance    -0.465451
+
+
+Naive Bayes Results
+Accuracy: 0.589
+
+Confusion Matrix:
+ [[4209 2028]
+ [3097 3128]]
+
+Classification Report:
+               precision    recall  f1-score   support
+
+        Pass       0.58      0.67      0.62      6237
+         Run       0.61      0.50      0.55      6225
+
+    accuracy                           0.59     12462
+   macro avg       0.59      0.59      0.59     12462
+weighted avg       0.59      0.59      0.59     12462
+
+Random Forest Results
+Accuracy: 0.643
+
+Confusion Matrix:
+ [[3679 2558]
+ [1894 4331]]
+
+Classification Report:
+               precision    recall  f1-score   support
+
+        Pass       0.66      0.59      0.62      6237
+         Run       0.63      0.70      0.66      6225
+
+    accuracy                           0.64     12462
+   macro avg       0.64      0.64      0.64     12462
+weighted avg       0.64      0.64      0.64     12462
+
+
+Feature Importances:
+             Feature  Importance
+1          distance    0.154842
+2         yard_line    0.139183
+4        score_diff    0.138049
+10      prev3_yards    0.094671
+0              down    0.093862
+8       prev1_yards    0.091116
+9       prev2_yards    0.088271
+11   prev1_distance    0.065973
+3            period    0.064161
+5   prev1_play_type    0.024478
+7   prev3_play_type    0.022839
+6   prev2_play_type    0.022556
