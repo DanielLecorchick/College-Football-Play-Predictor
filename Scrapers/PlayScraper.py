@@ -1,9 +1,15 @@
+"""
+College Football Play Prediction - Play Scraper
+Author: Daniel Lecorchick
+Purpose: Get all power 4 plays in using ESPN 2024 API
+"""
+
 import requests
 import json
 import time
 from collections import deque
 
-
+#input and output files
 GAME_ID_FILE = "espn_game_ids_2024.txt"
 OUTPUT_JSON = "all_plays_2024.json"
 
@@ -25,12 +31,12 @@ def scrape_game(game_id):
     try:
         data = requests.get(url, timeout=10).json()
     except Exception as e:
-        print(f"⚠️ Error fetching {game_id}: {e}")
+        print(f"Error fetching {game_id}: {e}")
         return None
 
     # Handle invalid or incomplete data
     if "drives" not in data or "header" not in data:
-        print(f"⚠️ Skipping {game_id}, missing data structure.")
+        print(f"Skipping {game_id}, missing data structure.")
         return None
 
     try:
@@ -42,6 +48,7 @@ def scrape_game(game_id):
     plays = []
     team_queues = {}
 
+    #goes through every drive in every game
     for drive in data.get("drives", {}).get("previous", []):
         team = drive.get("team", {}).get("displayName")
         if not team:
@@ -116,15 +123,15 @@ def main():
         game_data = scrape_game(gid)
         if game_data and game_data["plays"]:
             all_data["2024"][gid] = game_data
-            print(f"✅ {gid}: {len(game_data['plays'])} Run/Pass plays.")
+            print(f"{gid}: {len(game_data['plays'])} Run/Pass plays.")
         else:
-            print(f"⚠️ {gid}: No plays found or invalid game.")
+            print(f"{gid}: No plays found or invalid game.")
 
-        # Periodic save every 25 games
+        #save every 25 games
         if (i + 1) % 25 == 0:
             with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
                 json.dump(all_data, f, indent=2)
-            print(f"💾 Checkpoint saved ({i+1} games processed).")
+            print(f"Checkpoint saved ({i+1} games processed).")
 
         time.sleep(0.5)  #delay
 

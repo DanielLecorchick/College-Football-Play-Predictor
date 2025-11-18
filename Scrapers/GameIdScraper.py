@@ -1,22 +1,30 @@
+"""
+College Football Play Prediction - Game ID Scraper
+Author: Trenton Ottman
+Purpose: Get all game IDs from ESPNs website
+"""
+
 import requests
 from bs4 import BeautifulSoup
 import re
 import time
 from typing import Set, List
 
+"""
+Scraper for ESPN game IDs for college football games.
+    
+Args:
+    weeks: List of week numbers to scrape (e.g., [1, 2, 3, ..., 16])
+    groups: List of conference groups (1=ACC, 4=Big Ten, 5=Big 12, 8=SEC)
+    year: Season year (default: 2024)
+    seasontype: 2 for regular season, 3 for postseason
+    
+Returns:
+    Set of unique game IDs
+"""
+
 def scrape_espn_game_ids(weeks: List[int], groups: List[int], year: int = 2024, seasontype: int = 2) -> Set[str]:
-    """
-    Scrape ESPN game IDs for college football games.
-    
-    Args:
-        weeks: List of week numbers to scrape (e.g., [1, 2, 3, ..., 16])
-        groups: List of conference groups (1=ACC, 4=Big Ten, 5=Big 12, 8=SEC)
-        year: Season year (default: 2024)
-        seasontype: 2 for regular season, 3 for postseason
-    
-    Returns:
-        Set of unique game IDs
-    """
+
     base_url = "https://www.espn.com/college-football/schedule/_/week/{week}/year/{year}/seasontype/{seasontype}/group/{group}"
     
     game_ids = set()
@@ -40,18 +48,15 @@ def scrape_espn_game_ids(weeks: List[int], groups: List[int], year: int = 2024, 
                 
                 soup = BeautifulSoup(response.content, 'html.parser')
                 
-                # Find all links that contain game IDs
-                game_links = soup.find_all('a', href=re.compile(r'/college-football/game/_/gameId/\d+'))
+                game_links = soup.find_all('a', href=re.compile(r'/college-football/game/_/gameId/\d+')) #gets all links that contain game IDs
                 
                 for link in game_links:
                     href = link.get('href')
-                    # Extract game ID using regex
-                    match = re.search(r'/gameId/(\d+)', href)
+                    match = re.search(r'/gameId/(\d+)', href) # extract game ID using regex
                     if match:
                         game_id = match.group(1)
                         game_ids.add(game_id)
                 
-                # Be respectful with rate limiting
                 time.sleep(0.5)
                 
             except requests.RequestException as e:
@@ -62,9 +67,9 @@ def scrape_espn_game_ids(weeks: List[int], groups: List[int], year: int = 2024, 
 
 
 def main():
-    # Define parameters for Power 4 conferences
-    weeks = list(range(1, 17))  # Weeks 1-16
-    groups = [1, 4, 5, 8]  # ACC, Big Ten, Big 12, SEC
+    #parameters for Power 4 conferences
+    weeks = list(range(1, 17))  #weeks 1-16
+    groups = [1, 4, 5, 8]  #ACC, Big Ten, Big 12, SEC (power 4 confrences)
     
     print("Starting ESPN College Football Game ID Scraper")
     print("=" * 60)
@@ -73,7 +78,7 @@ def main():
     print("=" * 60)
     print()
     
-    # Scrape regular season
+    #gets all regular season games
     game_ids = scrape_espn_game_ids(weeks=weeks, groups=groups, year=2024, seasontype=2)
     
     print()
@@ -87,7 +92,7 @@ def main():
     for game_id in sorted_ids:
         print(game_id)
     
-    # Optional: Save to file
+    #Save to file
     output_file = "espn_game_ids_2024.txt"
     with open(output_file, 'w') as f:
         for game_id in sorted_ids:

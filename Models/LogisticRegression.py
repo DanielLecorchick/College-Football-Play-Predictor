@@ -1,7 +1,7 @@
 """
 College Football Play Prediction - Logistic Regression Model
 Author: Daniel Lecorchick
-Purpose: Predict Run vs Pass using ESPN 2024 play-by-play data
+Purpose: Predict Run vs Pass using ESPN 2024 play-by-play data using Logistic Regression Model
 """
 
 import json
@@ -12,7 +12,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import joblib
 
-# === 1. Load and flatten JSON ===
+# loads the JSON
 INPUT_FILE = "all_plays_2024.json"
 with open(INPUT_FILE, "r") as f:
     raw_data = json.load(f)
@@ -27,9 +27,9 @@ for season, games in raw_data.items():
             plays.append(p)
 
 df = pd.DataFrame(plays)
-print(f"✅ Loaded {len(df)} total plays")
+print(f"Loaded {len(df)} total plays")
 
-# === 2. Clean and preprocess ===
+#cleans and preprocesses the data
 df = df.dropna(subset=["label_run_pass", "down", "distance", "yard_line"])
 df = df[df["down"].between(1, 4)]
 df = df[df["distance"] <= 30]
@@ -45,7 +45,7 @@ for col in num_cols:
 for col in ["prev1_play_type", "prev2_play_type", "prev3_play_type"]:
     df[col].fillna("None", inplace=True)
 
-# === 3. Feature selection ===
+#feature selection
 feature_cols = [
     "down", "distance", "yard_line", "period", "score_diff",
     "prev1_play_type", "prev2_play_type", "prev3_play_type",
@@ -54,7 +54,6 @@ feature_cols = [
 X = df[feature_cols]
 y = df["label_run_pass"]
 
-# === 4. Encode categorical features ===
 cat_cols = ["prev1_play_type", "prev2_play_type", "prev3_play_type"]
 label_encoders = {}
 
@@ -63,42 +62,42 @@ for col in cat_cols:
     X[col] = le.fit_transform(X[col])
     label_encoders[col] = le
 
-# === 5. Train/test split ===
+#Train/test split
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
-# === 6. Scale numerical data ===
+# scale data
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-# === 7. Train Logistic Regression ===
+#Train Logistic Regression
 log_reg = LogisticRegression(
-    solver='lbfgs',       # Stable solver for mid-sized data
-    max_iter=1000,        # Ensure convergence
+    solver='lbfgs',
+    max_iter=1000,
     class_weight='balanced',
     random_state=42
 )
 log_reg.fit(X_train, y_train)
 
-# === 8. Evaluate ===
+#evaluate
 y_pred = log_reg.predict(X_test)
 
-print("\n🏈 Logistic Regression Results 🏈")
+print("\nLogistic Regression Results")
 print("Accuracy:", round(accuracy_score(y_test, y_pred), 3))
 print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
 print("\nClassification Report:\n", classification_report(y_test, y_pred))
 
-# === 9. Feature importance (coefficients) ===
+#feature importance 
 coef_df = pd.DataFrame({
     "Feature": feature_cols,
     "Coefficient": log_reg.coef_[0]
 }).sort_values("Coefficient", ascending=False)
 print("\nFeature Coefficients:\n", coef_df)
 
-# === 10. Save model ===
+#Save model
 joblib.dump(log_reg, "run_pass_logreg.pkl")
 joblib.dump(scaler, "scaler_logreg.pkl")
 joblib.dump(label_encoders, "encoders_logreg.pkl")
-print("\n✅ Saved Logistic Regression model to 'run_pass_logreg.pkl'")
+print("\nSaved Logistic Regression model to 'run_pass_logreg.pkl'")

@@ -1,7 +1,7 @@
 """
 College Football Play Prediction - Conditional Inference Forest Model
 Author: Dominic Ullmer
-Purpose: Predict Run vs Pass using ESPN 2024 play-by-play data
+Purpose: Predict Run vs Pass using ESPN 2024 play-by-play data using Conditional Inference Forest Model
 """
 
 import json
@@ -16,7 +16,7 @@ from rpy2.robjects import pandas2ri
 from rpy2.robjects.conversion import localconverter
 from rpy2.robjects.packages import importr
 
-# === 1. Load and flatten JSON ===
+# loads the JSON
 INPUT_FILE = "all_plays_2024.json"
 with open(INPUT_FILE, "r") as f:
     raw_data = json.load(f)
@@ -31,9 +31,9 @@ for season, games in raw_data.items():
             plays.append(p)
 
 df = pd.DataFrame(plays)
-print(f"✅ Loaded {len(df)} total plays")
+print(f"Loaded {len(df)} total plays")
 
-# === 2. Clean and preprocess ===
+#cleans and preprocesses the data
 df = df.dropna(subset=["label_run_pass", "down", "distance", "yard_line"])
 df = df[df["down"].between(1, 4)]
 df = df[df["distance"] <= 30]
@@ -49,7 +49,7 @@ for col in num_cols:
 for col in ["prev1_play_type", "prev2_play_type", "prev3_play_type"]:
     df[col] = df[col].fillna("None")
 
-# === 3. Feature selection ===
+#feature selection
 feature_cols = [
     "down", "distance", "yard_line", "period", "score_diff",
     "prev1_play_type", "prev2_play_type", "prev3_play_type",
@@ -58,7 +58,6 @@ feature_cols = [
 X = df[feature_cols].copy()
 y = df["label_run_pass"]
 
-# === 4. Encode categorical features ===
 cat_cols = ["prev1_play_type", "prev2_play_type", "prev3_play_type"]
 label_encoders = {}
 
@@ -67,17 +66,17 @@ for col in cat_cols:
     X[col] = le.fit_transform(X[col])
     label_encoders[col] = le
 
-# === 5. Train/test split ===
+#Train/test split
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
-# === 6. Prepare data for R ===
+#Prepare data for R
 train_data = X_train.copy()
 train_data['label_run_pass'] = y_train.values
 
-# === 7. Train Conditional Inference Forest in R ===
-print("\n🏈 Training Conditional Inference Forest (via R)...")
+# Train Conditional Inference Forest in R 
+print("\nTraining Conditional Inference Forest (via R)")
 
 party = importr('party')
 base = importr('base')
@@ -96,9 +95,9 @@ ro.r('''
                          controls=cforest_unbiased(ntree=300, mtry=4))
 ''')
 
-print("✅ Model training complete!")
+print("Model training complete")
 
-# === 8. Make predictions ===
+#testing
 test_data = X_test.copy()
 test_data['label_run_pass'] = y_test.values
 
@@ -111,13 +110,13 @@ ro.r('test_data$label_run_pass <- as.factor(test_data$label_run_pass)')
 r_predictions = ro.r('as.character(predict(cif_model, newdata=test_data, type="response"))')
 y_pred = np.array(r_predictions)
 
-# === 9. Evaluate ===
-print("\n🏈 Conditional Inference Forest Results 🏈")
+#evaluate
+print("\nConditional Inference Forest Results")
 print("Accuracy:", round(accuracy_score(y_test, y_pred), 3))
 print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
 print("\nClassification Report:\n", classification_report(y_test, y_pred))
 
-# === 10. Variable Importance ===
+#Variable Importance
 var_imp = ro.r('varimp(cif_model)')
 importance_df = pd.DataFrame({
     "Feature": feature_cols,
@@ -125,7 +124,7 @@ importance_df = pd.DataFrame({
 }).sort_values("Importance", ascending=False)
 print("\nFeature Importances:\n", importance_df)
 
-# === 11. Save model ===
+#Save model
 ro.r('save(cif_model, file="run_pass_cif.RData")')
 joblib.dump(label_encoders, "encoders_cif.pkl")
-print("\n✅ Saved Conditional Inference Forest model to 'run_pass_cif.RData'")
+print("\nSaved Conditional Inference Forest model to 'run_pass_cif.RData'")

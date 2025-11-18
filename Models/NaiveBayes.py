@@ -1,7 +1,7 @@
 """
 College Football Play Prediction - Naive Bayes Model
 Author: Daniel Lecorchick
-Purpose: Predict Run vs Pass using ESPN 2024 play-by-play data
+Purpose: Predict Run vs Pass using ESPN 2024 play-by-play data using Naive Bayes Model
 """
 
 import json
@@ -12,7 +12,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import joblib
 
-# === 1. Load and flatten JSON ===
+# loads the JSON
 INPUT_FILE = "all_plays_2024.json"
 with open(INPUT_FILE, "r") as f:
     raw_data = json.load(f)
@@ -27,9 +27,9 @@ for season, games in raw_data.items():
             plays.append(p)
 
 df = pd.DataFrame(plays)
-print(f"✅ Loaded {len(df)} total plays")
+print(f"Loaded {len(df)} total plays")
 
-# === 2. Clean and preprocess ===
+#cleans and preprocesses the data
 df = df.dropna(subset=["label_run_pass", "down", "distance", "yard_line"])
 df = df[df["down"].between(1, 4)]
 df = df[df["distance"] <= 30]
@@ -45,7 +45,7 @@ for col in num_cols:
 for col in ["prev1_play_type", "prev2_play_type", "prev3_play_type"]:
     df[col].fillna("None", inplace=True)
 
-# === 3. Feature selection ===
+#feature selection
 feature_cols = [
     "down", "distance", "yard_line", "period", "score_diff",
     "prev1_play_type", "prev2_play_type", "prev3_play_type",
@@ -54,7 +54,6 @@ feature_cols = [
 X = df[feature_cols]
 y = df["label_run_pass"]
 
-# === 4. Encode categorical features ===
 cat_cols = ["prev1_play_type", "prev2_play_type", "prev3_play_type"]
 label_encoders = {}
 
@@ -63,31 +62,30 @@ for col in cat_cols:
     X[col] = le.fit_transform(X[col])
     label_encoders[col] = le
 
-# === 5. Train/test split ===
+#Train/test split
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
-# === 6. Scale features ===
-# Naive Bayes is sensitive to feature scale
+#scale features
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-# === 7. Train Naive Bayes ===
+#train Naive Bayes
 nb_model = GaussianNB()
 nb_model.fit(X_train, y_train)
 
-# === 8. Evaluate ===
+#evaluate
 y_pred = nb_model.predict(X_test)
 
-print("\n🏈 Naive Bayes Results 🏈")
+print("\nNaive Bayes Results")
 print("Accuracy:", round(accuracy_score(y_test, y_pred), 3))
 print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
 print("\nClassification Report:\n", classification_report(y_test, y_pred))
 
-# === 9. Save model ===
+#Save model
 joblib.dump(nb_model, "run_pass_nb.pkl")
 joblib.dump(scaler, "scaler_nb.pkl")
 joblib.dump(label_encoders, "encoders_nb.pkl")
-print("\n✅ Saved Naive Bayes model to 'run_pass_nb.pkl'")
+print("\nSaved Naive Bayes model to 'run_pass_nb.pkl'")

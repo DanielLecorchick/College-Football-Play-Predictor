@@ -1,7 +1,7 @@
 """
 College Football Play Prediction - Gradient Boosting Model
 Author: Daniel Lecorchick
-Purpose: Predict Run vs Pass using ESPN 2024 play-by-play data
+Purpose: Predict Run vs Pass using ESPN 2024 play-by-play data using Gradient Boosting Model
 """
 
 import json
@@ -27,7 +27,7 @@ for season, games in raw_data.items():
             plays.append(p)
 
 df = pd.DataFrame(plays)
-print(f"✅ Loaded {len(df)} total plays")
+print(f"Loaded {len(df)} total plays")
 
 # === 2. Clean and preprocess ===
 df = df.dropna(subset=["label_run_pass", "down", "distance", "yard_line"])
@@ -81,7 +81,7 @@ gb_model.fit(X_train, y_train)
 # === 7. Evaluate ===
 y_pred = gb_model.predict(X_test)
 
-print("\n🏈 Gradient Boosting Results 🏈")
+print("\nGradient Boosting Results")
 print("Accuracy:", round(accuracy_score(y_test, y_pred), 3))
 print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
 print("\nClassification Report:\n", classification_report(y_test, y_pred))
@@ -96,4 +96,4 @@ print("\nFeature Importances:\n", importances)
 # === 9. Save model ===
 joblib.dump(gb_model, "run_pass_gb.pkl")
 joblib.dump(label_encoders, "encoders_gb.pkl")
-print("\n✅ Saved Gradient Boosting model to 'run_pass_gb.pkl'")
+print("\nSaved Gradient Boosting model to 'run_pass_gb.pkl'")
