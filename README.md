@@ -19,7 +19,7 @@
 ### Python Dependencies
 * Install required Python packages:
 ```
-> pip install pandas scikit-learn joblib numpy
+> pip install pandas scikit-learn joblib numpy requests beautifulsoup4
 ```
 
 ### R Dependencies (Only for Conditional Inference)
