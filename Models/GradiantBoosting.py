@@ -12,7 +12,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import joblib
 
-# === 1. Load and flatten JSON ===
+# loads the JSON
 INPUT_FILE = "all_plays_2024.json"
 with open(INPUT_FILE, "r") as f:
     raw_data = json.load(f)
@@ -29,7 +29,7 @@ for season, games in raw_data.items():
 df = pd.DataFrame(plays)
 print(f"Loaded {len(df)} total plays")
 
-# === 2. Clean and preprocess ===
+#cleans and preprocesses the data
 df = df.dropna(subset=["label_run_pass", "down", "distance", "yard_line"])
 df = df[df["down"].between(1, 4)]
 df = df[df["distance"] <= 30]
@@ -45,7 +45,7 @@ for col in num_cols:
 for col in ["prev1_play_type", "prev2_play_type", "prev3_play_type"]:
     df[col].fillna("None", inplace=True)
 
-# === 3. Select features and labels ===
+#feature selection
 feature_cols = [
     "down", "distance", "yard_line", "period", "score_diff",
     "prev1_play_type", "prev2_play_type", "prev3_play_type",
@@ -54,7 +54,6 @@ feature_cols = [
 X = df[feature_cols]
 y = df["label_run_pass"]
 
-# === 4. Encode categorical columns ===
 cat_cols = ["prev1_play_type", "prev2_play_type", "prev3_play_type"]
 label_encoders = {}
 for col in cat_cols:
@@ -62,12 +61,12 @@ for col in cat_cols:
     X[col] = le.fit_transform(X[col])
     label_encoders[col] = le
 
-# === 5. Train/test split ===
+#Train/test split
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
-# === 6. Gradient Boosting model ===
+#gradient Boosting model 
 gb_model = GradientBoostingClassifier(
     n_estimators=300,
     learning_rate=0.05,
@@ -78,7 +77,7 @@ gb_model = GradientBoostingClassifier(
 
 gb_model.fit(X_train, y_train)
 
-# === 7. Evaluate ===
+#evaluate
 y_pred = gb_model.predict(X_test)
 
 print("\nGradient Boosting Results")
@@ -86,14 +85,14 @@ print("Accuracy:", round(accuracy_score(y_test, y_pred), 3))
 print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
 print("\nClassification Report:\n", classification_report(y_test, y_pred))
 
-# === 8. Feature Importance ===
+#Variable Importance
 importances = pd.DataFrame({
     "Feature": feature_cols,
     "Importance": gb_model.feature_importances_
 }).sort_values("Importance", ascending=False)
 print("\nFeature Importances:\n", importances)
 
-# === 9. Save model ===
+#Save model
 joblib.dump(gb_model, "run_pass_gb.pkl")
 joblib.dump(label_encoders, "encoders_gb.pkl")
 print("\nSaved Gradient Boosting model to 'run_pass_gb.pkl'")
