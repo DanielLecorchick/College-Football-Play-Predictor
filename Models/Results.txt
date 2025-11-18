@@ -164,3 +164,516 @@ Feature Importances:
 5   prev1_play_type    0.024478
 7   prev3_play_type    0.022839
 6   prev2_play_type    0.022556
+
+
+Data loaded: 62181 plays
+Evaluating model: Random Forest (prefix='rf')
+Evaluation Results for Random Forest
+| Metric        | Value    |
+|---------------|----------|
+| Accuracy      | 0.761    |
+| F1 (macro)    | 0.761    |
+| Run Bias      | 0.5      |
+| Cross-Entropy | 1.04     |
+| Brier Score   | 0.394    |
+| Top Feature   | distance |
+
+Situational Accuracy
+
+By down:
+|   down |   Accuracy |
+|--------|------------|
+|      1 |   0.724776 |
+|      2 |   0.756268 |
+|      3 |   0.835482 |
+|      4 |   0.865034 |
+
+By period:
+|   period |   Accuracy |
+|----------|------------|
+|        1 |   0.721088 |
+|        2 |   0.750308 |
+|        3 |   0.755965 |
+|        4 |   0.81362  |
+|        5 |   0.869863 |
+|        6 |   0.777778 |
+|        9 |   1        |
+|       12 |   1        |
+
+By score_diff:
+| score_diff                 |   Accuracy |
+|----------------------------|------------|
+| Leading big (≥ 14)         |   0.800887 |
+| Leading small (1 to 13)    |   0.767571 |
+| Tied                       |   0.712999 |
+| Trailing big (≤ -14)       |   0.785241 |
+| Trailing small (-13 to -1) |   0.745706 |
+
+By distance:
+| distance         |   Accuracy |
+|------------------|------------|
+| Long (8–15)      |   0.732517 |
+| Medium (4–7)     |   0.784516 |
+| Short (≤ 3)      |   0.841544 |
+| Very long (> 15) |   0.862319 |
+
+By two_min:
+| two_min   |   Accuracy |
+|-----------|------------|
+| False     |   0.76007  |
+| True      |   0.818756 |
+
+Evaluating model: KNN (prefix='knn')
+Evaluation Results for KNN
+| Metric        |   Value |
+|---------------|---------|
+| Accuracy      |   0.919 |
+| F1 (macro)    |   0.919 |
+| Run Bias      |   0.5   |
+| Cross-Entropy |  28.473 |
+| Brier Score   |   0.85  |
+
+Situational Accuracy
+
+By down:
+|   down |   Accuracy |
+|--------|------------|
+|      1 |   0.906791 |
+|      2 |   0.916802 |
+|      3 |   0.944811 |
+|      4 |   0.939066 |
+
+By period:
+|   period |   Accuracy |
+|----------|------------|
+|        1 |   0.890592 |
+|        2 |   0.921341 |
+|        3 |   0.927026 |
+|        4 |   0.933603 |
+|        5 |   0.952055 |
+|        6 |   0.888889 |
+|        9 |   1        |
+|       12 |   1        |
+
+By score_diff:
+| score_diff                 |   Accuracy |
+|----------------------------|------------|
+| Leading big (≥ 14)         |   0.933763 |
+| Leading small (1 to 13)    |   0.92347  |
+| Tied                       |   0.889826 |
+| Trailing big (≤ -14)       |   0.924971 |
+| Trailing small (-13 to -1) |   0.919202 |
+
+By distance:
+| distance         |   Accuracy |
+|------------------|------------|
+| Long (8–15)      |   0.913087 |
+| Medium (4–7)     |   0.923111 |
+| Short (≤ 3)      |   0.932733 |
+| Very long (> 15) |   0.942512 |
+
+By two_min:
+| two_min   |   Accuracy |
+|-----------|------------|
+| False     |   0.91849  |
+| True      |   0.922453 |
+
+Evaluating model: Naive Bayes (prefix='nb')
+Evaluation Results for Naive Bayes
+| Metric        |   Value |
+|---------------|---------|
+| Accuracy      |   0.587 |
+| F1 (macro)    |   0.582 |
+| Run Bias      |   0.5   |
+| Cross-Entropy |   0.873 |
+| Brier Score   |   0.314 |
+
+Situational Accuracy
+
+By down:
+|   down |   Accuracy |
+|--------|------------|
+|      1 |   0.545035 |
+|      2 |   0.583272 |
+|      3 |   0.687077 |
+|      4 |   0.571754 |
+
+By period:
+|   period |   Accuracy |
+|----------|------------|
+|        1 |   0.553686 |
+|        2 |   0.570307 |
+|        3 |   0.578643 |
+|        4 |   0.642515 |
+|        5 |   0.561644 |
+|        6 |   0.333333 |
+|        9 |   0        |
+|       12 |   1        |
+
+By score_diff:
+| score_diff                 |   Accuracy |
+|----------------------------|------------|
+| Leading big (≥ 14)         |   0.618712 |
+| Leading small (1 to 13)    |   0.595769 |
+| Tied                       |   0.562056 |
+| Trailing big (≤ -14)       |   0.582399 |
+| Trailing small (-13 to -1) |   0.578037 |
+
+By distance:
+| distance         |   Accuracy |
+|------------------|------------|
+| Long (8–15)      |   0.570168 |
+| Medium (4–7)     |   0.629855 |
+| Short (≤ 3)      |   0.585623 |
+| Very long (> 15) |   0.674879 |
+
+By two_min:
+| two_min   |   Accuracy |
+|-----------|------------|
+| False     |   0.587651 |
+| True      |   0.530207 |
+
+Evaluating model: Logistic Regression (prefix='logreg')
+Evaluation Results for Logistic Regression
+| Metric        | Value    |
+|---------------|----------|
+| Accuracy      | 0.603    |
+| F1 (macro)    | 0.6      |
+| Run Bias      | 0.5      |
+| Cross-Entropy | 0.8      |
+| Brier Score   | 0.298    |
+| Top Feature   | distance |
+
+Situational Accuracy
+
+By down:
+|   down |   Accuracy |
+|--------|------------|
+|      1 |   0.557628 |
+|      2 |   0.591695 |
+|      3 |   0.728166 |
+|      4 |   0.552392 |
+
+By period:
+|   period |   Accuracy |
+|----------|------------|
+|        1 |   0.583531 |
+|        2 |   0.59088  |
+|        3 |   0.610504 |
+|        4 |   0.626105 |
+|        5 |   0.60274  |
+|        6 |   0.444444 |
+|        9 |   0        |
+|       12 |   1        |
+
+By score_diff:
+| score_diff                 |   Accuracy |
+|----------------------------|------------|
+| Leading big (≥ 14)         |   0.62466  |
+| Leading small (1 to 13)    |   0.627077 |
+| Tied                       |   0.581777 |
+| Trailing big (≤ -14)       |   0.5839   |
+| Trailing small (-13 to -1) |   0.594663 |
+
+By distance:
+| distance         |   Accuracy |
+|------------------|------------|
+| Long (8–15)      |   0.579142 |
+| Medium (4–7)     |   0.64036  |
+| Short (≤ 3)      |   0.643889 |
+| Very long (> 15) |   0.68599  |
+
+By two_min:
+| two_min   |   Accuracy |
+|-----------|------------|
+| False     |   0.602584 |
+| True      |   0.605951 |
+
+Evaluating model: Gradient Boosting (prefix='gb')
+Evaluation Results for Gradient Boosting
+| Metric        | Value   |
+|---------------|---------|
+| Accuracy      | 0.646   |
+| F1 (macro)    | 0.646   |
+| Run Bias      | 0.5     |
+| Cross-Entropy | 0.898   |
+| Brier Score   | 0.338   |
+| Top Feature   | down    |
+
+Situational Accuracy
+
+By down:
+|   down |   Accuracy |
+|--------|------------|
+|      1 |   0.606055 |
+|      2 |   0.620265 |
+|      3 |   0.759587 |
+|      4 |   0.78246  |
+
+By period:
+|   period |   Accuracy |
+|----------|------------|
+|        1 |   0.618802 |
+|        2 |   0.629447 |
+|        3 |   0.63673  |
+|        4 |   0.698877 |
+|        5 |   0.630137 |
+|        6 |   0.666667 |
+|        9 |   1        |
+|       12 |   1        |
+
+By score_diff:
+| score_diff                 |   Accuracy |
+|----------------------------|------------|
+| Leading big (≥ 14)         |   0.671136 |
+| Leading small (1 to 13)    |   0.654125 |
+| Tied                       |   0.619513 |
+| Trailing big (≤ -14)       |   0.650013 |
+| Trailing small (-13 to -1) |   0.639264 |
+
+By distance:
+| distance         |   Accuracy |
+|------------------|------------|
+| Long (8–15)      |   0.620764 |
+| Medium (4–7)     |   0.667196 |
+| Short (≤ 3)      |   0.724657 |
+| Very long (> 15) |   0.710628 |
+
+By two_min:
+| two_min   |   Accuracy |
+|-----------|------------|
+| False     |    0.64573 |
+| True      |    0.67899 |
+
+Evaluating model: Conditional Inference (prefix='ctree')
+Skipping Conditional Inference (ctree) — Missing model or encoder for prefix 'ctree'
+
+
+Model Leaderboard
+|   Rank | Model               |   Accuracy |   F1 (macro) |   Run Bias | Top Feature   |
+|--------|---------------------|------------|--------------|------------|---------------|
+|      1 | KNN                 |      0.919 |        0.919 |        0.5 | -             |
+|      2 | Random Forest       |      0.761 |        0.761 |        0.5 | distance      |
+|      3 | Gradient Boosting   |      0.646 |        0.646 |        0.5 | down          |
+|      4 | Logistic Regression |      0.603 |        0.6   |        0.5 | distance      |
+|      5 | Naive Bayes         |      0.587 |        0.582 |        0.5 | -             |
+
+Situational Leaderboards
+
+=== DOWN ===
+
+1:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.906791 |
+|      2 | Random Forest       |   0.724776 |
+|      3 | Gradient Boosting   |   0.606055 |
+|      4 | Logistic Regression |   0.557628 |
+|      5 | Naive Bayes         |   0.545035 |
+
+2:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.916802 |
+|      2 | Random Forest       |   0.756268 |
+|      3 | Gradient Boosting   |   0.620265 |
+|      4 | Logistic Regression |   0.591695 |
+|      5 | Naive Bayes         |   0.583272 |
+
+3:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.944811 |
+|      2 | Random Forest       |   0.835482 |
+|      3 | Gradient Boosting   |   0.759587 |
+|      4 | Logistic Regression |   0.728166 |
+|      5 | Naive Bayes         |   0.687077 |
+
+4:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.939066 |
+|      2 | Random Forest       |   0.865034 |
+|      3 | Gradient Boosting   |   0.78246  |
+|      4 | Naive Bayes         |   0.571754 |
+|      5 | Logistic Regression |   0.552392 |
+
+=== PERIOD ===
+
+1:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.890592 |
+|      2 | Random Forest       |   0.721088 |
+|      3 | Gradient Boosting   |   0.618802 |
+|      4 | Logistic Regression |   0.583531 |
+|      5 | Naive Bayes         |   0.553686 |
+
+2:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.921341 |
+|      2 | Random Forest       |   0.750308 |
+|      3 | Gradient Boosting   |   0.629447 |
+|      4 | Logistic Regression |   0.59088  |
+|      5 | Naive Bayes         |   0.570307 |
+
+3:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.927026 |
+|      2 | Random Forest       |   0.755965 |
+|      3 | Gradient Boosting   |   0.63673  |
+|      4 | Logistic Regression |   0.610504 |
+|      5 | Naive Bayes         |   0.578643 |
+
+4:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.933603 |
+|      2 | Random Forest       |   0.81362  |
+|      3 | Gradient Boosting   |   0.698877 |
+|      4 | Naive Bayes         |   0.642515 |
+|      5 | Logistic Regression |   0.626105 |
+
+5:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.952055 |
+|      2 | Random Forest       |   0.869863 |
+|      3 | Gradient Boosting   |   0.630137 |
+|      4 | Logistic Regression |   0.60274  |
+|      5 | Naive Bayes         |   0.561644 |
+
+6:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.888889 |
+|      2 | Random Forest       |   0.777778 |
+|      3 | Gradient Boosting   |   0.666667 |
+|      4 | Logistic Regression |   0.444444 |
+|      5 | Naive Bayes         |   0.333333 |
+
+9:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | Random Forest       |          1 |
+|      2 | KNN                 |          1 |
+|      3 | Gradient Boosting   |          1 |
+|      4 | Naive Bayes         |          0 |
+|      5 | Logistic Regression |          0 |
+
+12:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | Random Forest       |          1 |
+|      2 | KNN                 |          1 |
+|      3 | Naive Bayes         |          1 |
+|      4 | Logistic Regression |          1 |
+|      5 | Gradient Boosting   |          1 |
+
+=== SCORE_DIFF ===
+
+Leading big (≥ 14):
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.933763 |
+|      2 | Random Forest       |   0.800887 |
+|      3 | Gradient Boosting   |   0.671136 |
+|      4 | Logistic Regression |   0.62466  |
+|      5 | Naive Bayes         |   0.618712 |
+
+Leading small (1 to 13):
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.92347  |
+|      2 | Random Forest       |   0.767571 |
+|      3 | Gradient Boosting   |   0.654125 |
+|      4 | Logistic Regression |   0.627077 |
+|      5 | Naive Bayes         |   0.595769 |
+
+Tied:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.889826 |
+|      2 | Random Forest       |   0.712999 |
+|      3 | Gradient Boosting   |   0.619513 |
+|      4 | Logistic Regression |   0.581777 |
+|      5 | Naive Bayes         |   0.562056 |
+
+Trailing big (≤ -14):
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.924971 |
+|      2 | Random Forest       |   0.785241 |
+|      3 | Gradient Boosting   |   0.650013 |
+|      4 | Logistic Regression |   0.5839   |
+|      5 | Naive Bayes         |   0.582399 |
+
+Trailing small (-13 to -1):
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.919202 |
+|      2 | Random Forest       |   0.745706 |
+|      3 | Gradient Boosting   |   0.639264 |
+|      4 | Logistic Regression |   0.594663 |
+|      5 | Naive Bayes         |   0.578037 |
+
+=== DISTANCE ===
+
+Long (8–15):
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.913087 |
+|      2 | Random Forest       |   0.732517 |
+|      3 | Gradient Boosting   |   0.620764 |
+|      4 | Logistic Regression |   0.579142 |
+|      5 | Naive Bayes         |   0.570168 |
+
+Medium (4–7):
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.923111 |
+|      2 | Random Forest       |   0.784516 |
+|      3 | Gradient Boosting   |   0.667196 |
+|      4 | Logistic Regression |   0.64036  |
+|      5 | Naive Bayes         |   0.629855 |
+
+Short (≤ 3):
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.932733 |
+|      2 | Random Forest       |   0.841544 |
+|      3 | Gradient Boosting   |   0.724657 |
+|      4 | Logistic Regression |   0.643889 |
+|      5 | Naive Bayes         |   0.585623 |
+
+Very long (> 15):
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.942512 |
+|      2 | Random Forest       |   0.862319 |
+|      3 | Gradient Boosting   |   0.710628 |
+|      4 | Logistic Regression |   0.68599  |
+|      5 | Naive Bayes         |   0.674879 |
+
+=== TWO_MIN ===
+
+False:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.91849  |
+|      2 | Random Forest       |   0.76007  |
+|      3 | Gradient Boosting   |   0.64573  |
+|      4 | Logistic Regression |   0.602584 |
+|      5 | Naive Bayes         |   0.587651 |
+
+True:
+|   Rank | Model               |   Accuracy |
+|--------|---------------------|------------|
+|      1 | KNN                 |   0.922453 |
+|      2 | Random Forest       |   0.818756 |
+|      3 | Gradient Boosting   |   0.67899  |
+|      4 | Logistic Regression |   0.605951 |
+|      5 | Naive Bayes         |   0.530207 |
+
