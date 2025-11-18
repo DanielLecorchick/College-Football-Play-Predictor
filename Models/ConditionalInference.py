@@ -118,7 +118,7 @@ print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
 print("\nClassification Report:\n", classification_report(y_test, y_pred))
 
 # === 10. Variable Importance ===
-var_imp = party.varimp(cif_model)
+var_imp = ro.r('varimp(cif_model)')
 importance_df = pd.DataFrame({
     "Feature": feature_cols,
     "Importance": np.array(var_imp)
