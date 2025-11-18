@@ -32,7 +32,7 @@
 ```
 
 ### Running a Model
-* Each model can be ran with:
+* Each model can be run with:
 ```
 > python Models/ModelName.py
 ```
